@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>paradox® — Creative Agency</title>
-<meta name="description" content="Crafting digital experiences that inspire & convert.">
+<title>家电维修社团 — 修的是家电，救的是生活</title>
+<meta name="description" content="校园家电维修社团：免费故障诊断、小家电检修、维修技能教学。坏了别扔，先来找我们。">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='38' fill='%23a855f7'/></svg>">
 <!--
   ═══════════════════════════════════════════════════════════════
-  paradox · 创意机构作品集（滚动叙事单页）
+  家电维修社团 · 宣传主页（滚动叙事单页）
   ───────────────────────────────────────────────────────────────
   结构：Hero(WebGL波浪) → SELECTED WORK → 4个项目(圆形双色调)
         → 打字机宣言 → 服务列表(三态状态机) → 页脚
@@ -19,7 +19,7 @@
 -->
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
 <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
-<link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ═══════════ 1. 变量与基础 ═══════════ */
 :root{
@@ -30,7 +30,7 @@
   --purple:#a855f7;
   --pink:#e8a4e0;
   --deep:#581c87;
-  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --serif:'Playfair Display','Noto Serif SC',Georgia,'Times New Roman','SimSun',serif;
   --sans:'Inter',-apple-system,'Segoe UI','Noto Sans SC',sans-serif;
   --ease:cubic-bezier(0.16,1,0.3,1);
 }
@@ -61,7 +61,7 @@ img{max-width:100%}
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
 }
 .logo{
-  font-family:var(--serif);font-style:italic;font-weight:600;
+  font-family:var(--serif);font-weight:600;
   font-size:1.45rem;color:#fff;text-decoration:none;
 }
 .logo sup{font-size:.45em;font-style:normal;margin-left:2px;color:var(--pink)}
@@ -96,7 +96,7 @@ body.menu-open .burger span:last-child{transform:translateY(-3.75px) rotate(-45d
 }
 body.menu-open .overlay{opacity:1;visibility:visible}
 .overlay a{
-  font-family:var(--serif);font-style:italic;font-weight:500;
+  font-family:var(--serif);font-weight:600;
   font-size:clamp(2.2rem,6vw,4.6rem);color:#fff;text-decoration:none;
   padding:1.3vh 0;display:flex;align-items:baseline;gap:1.2rem;
   transform:translateY(34px);opacity:0;
@@ -158,7 +158,7 @@ body.menu-open .overlay a:nth-child(4){transition-delay:.18s}
 /* 分层：.lw=滚动退场层(scrub)，.hl=入场揭示层(intro)，二者分离避免 scrub 捕获入场起始态 */
 .lw{display:block;will-change:transform,filter,opacity}
 .hl{display:block;will-change:transform}
-.amp{font-style:italic;color:var(--pink)}
+.amp{color:var(--pink)}
 .hero-sub{
   margin-top:4.5vh;max-width:44ch;
   color:#98989f;font-size:clamp(.95rem,1.15vw,1.08rem);
@@ -230,7 +230,7 @@ body.menu-open .overlay a:nth-child(4){transition-delay:.18s}
 }
 .project-tags b{color:var(--pink);font-weight:500}
 .project-title{
-  font-family:var(--serif);font-style:italic;font-weight:500;
+  font-family:var(--serif);font-weight:600;
   font-size:clamp(2.2rem,4.6vw,4rem);
   margin:2.4vh 0 2vh;line-height:1.05;
 }
@@ -256,7 +256,7 @@ body.menu-open .overlay a:nth-child(4){transition-delay:.18s}
   padding:14vh 6vw;text-align:center;
 }
 .type-text{
-  font-family:var(--serif);font-style:italic;font-weight:500;
+  font-family:var(--serif);font-weight:600;
   font-size:clamp(1.7rem,4.2vw,3.8rem);line-height:1.4;
   max-width:22ch;min-height:4.6em;color:#fff;
 }
@@ -322,7 +322,7 @@ body.reduced .caret{animation:none}
 /* ═══════════ 9. 页脚 ═══════════ */
 footer{padding:12vh 6vw 5vh;border-top:1px solid var(--faint)}
 .foot-word{
-  font-family:var(--serif);font-style:italic;font-weight:600;
+  font-family:var(--serif);font-weight:700;
   font-size:clamp(3.5rem,13vw,11rem);line-height:1;
   background:linear-gradient(120deg,#fff 30%,var(--pink));
   -webkit-background-clip:text;background-clip:text;
@@ -388,20 +388,20 @@ footer{padding:12vh 6vw 5vh;border-top:1px solid var(--faint)}
 
 <!-- ═══════════ 固定导航 ═══════════ -->
 <header class="nav" id="nav">
-  <a class="logo" href="#hero" data-scroll>paradox<sup>®</sup></a>
+  <a class="logo" href="#hero" data-scroll>家电维修<sup>社团</sup></a>
   <nav class="nav-right">
-    <a class="nav-link" href="#work" data-scroll>Work</a>
+    <a class="nav-link" href="#work" data-scroll>案例</a>
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span></button>
   </nav>
 </header>
 
 <!-- ═══════════ 全屏菜单 ═══════════ -->
 <div class="overlay">
-  <a href="#work" data-scroll><em>01</em>Selected Work</a>
-  <a href="#statement" data-scroll><em>02</em>Statement</a>
-  <a href="#services" data-scroll><em>03</em>Services</a>
-  <a href="mailto:hello@paradox.studio"><em>04</em>Contact</a>
-  <p class="overlay-note">hello@paradox.studio — Beijing · Worldwide</p>
+  <a href="#work" data-scroll><em>01</em>精选案例</a>
+  <a href="#statement" data-scroll><em>02</em>社团宣言</a>
+  <a href="#services" data-scroll><em>03</em>服务内容</a>
+  <a href="#contact" data-scroll><em>04</em>加入我们</a>
+  <p class="overlay-note">QQ群：123456789 · 线下工坊 · 服务全校</p>
 </div>
 
 <!-- ═══════════ 固定 CTA + 进度点 ═══════════ -->
@@ -416,76 +416,76 @@ footer{padding:12vh 6vw 5vh;border-top:1px solid var(--faint)}
     <div class="hero-scrim"></div>
   </div>
   <div class="hero-inner">
-    <div class="kwrap"><p class="hero-kicker kicker">( Creative Agency — Est. 2019 )</p></div>
+    <div class="kwrap"><p class="hero-kicker kicker">( 家电维修社团 · 校园公益服务 )</p></div>
     <h1 class="hero-title">
-      <span class="mask"><span class="lw lw-1"><span class="hl">Crafting digital</span></span></span>
-      <span class="mask"><span class="lw lw-2"><span class="hl">experiences that</span></span></span>
-      <span class="mask"><span class="lw lw-3"><span class="hl">inspire <span class="amp">&amp;</span> convert.</span></span></span>
+      <span class="mask"><span class="lw lw-1"><span class="hl">修的是家电</span></span></span>
+      <span class="mask"><span class="lw lw-2"><span class="hl">救的是生活</span></span></span>
+      <span class="mask"><span class="lw lw-3"><span class="hl">省的是<span class="amp">钱包</span>。</span></span></span>
     </h1>
-    <div class="swrap"><p class="hero-sub">A creative agency specializing in brand strategy, web design, and development. We build worlds out of pixels — and turn them into revenue.</p></div>
+    <div class="swrap"><p class="hero-sub">一群相信「没有修不好的电器，只有没找对的人」的同学。台灯、风扇、吹风机、小音箱……坏了别急着扔，拿来让我们碰碰运气。</p></div>
   </div>
-  <div class="scroll-hint"><span class="hint-lw"><span>Scroll</span><span class="hint-arrow">↓</span></span></div>
+  <div class="scroll-hint"><span class="hint-lw"><span>向下滚动</span><span class="hint-arrow">↓</span></span></div>
 </section>
 
 <!-- ═══════════ 区块2+3：SELECTED WORK + 项目 ═══════════ -->
 <section id="work" class="work-section">
   <div class="work-head">
     <div class="head-row">
-      <span class="kicker">Case studies — 2019 / 2025</span>
+      <span class="kicker">维修案例 — 2025 学年</span>
       <span class="work-count">( 04 )</span>
     </div>
     <h2 class="work-title">
-      <span class="mask"><span class="line">Selected</span></span>
-      <span class="mask"><span class="line">Work</span></span>
+      <span class="mask"><span class="line">精选</span></span>
+      <span class="mask"><span class="line">案例</span></span>
     </h2>
   </div>
 
   <div class="projects">
     <article class="project">
       <div class="project-media">
-        <div class="circle-img"><img src="tupian/08.png" alt="Brand Vision" loading="lazy" decoding="async"></div>
+        <div class="circle-img"><img src="tupian/08.png" alt="台灯复活记" loading="lazy" decoding="async"></div>
       </div>
       <div class="project-info">
-        <div class="project-tags"><b>01</b><span>Branding · Art Direction</span></div>
-        <h3 class="project-title">Brand Vision</h3>
-        <p class="project-desc">A rebrand that turns heritage into modern desire — identity systems built to be felt, not just seen. Enclosed worlds, opened up.</p>
-        <a class="project-link" href="#" onclick="return false">View case <span>↗</span></a>
+        <div class="project-tags"><b>01</b><span>照明 · 电路检修</span></div>
+        <h3 class="project-title">台灯复活记</h3>
+        <p class="project-desc">罢工三个月的宿舍台灯，拆开一看只是电容鼓包。换件、补焊，当晚重新亮起——修灯这件事，我们是认真的。</p>
+        <a class="project-link" href="#" onclick="return false">查看案例 <span>↗</span></a>
       </div>
     </article>
 
     <article class="project">
       <div class="project-media">
-        <div class="circle-img"><img src="tupian/01.jpg" alt="Digital Canvas" loading="lazy" decoding="async"></div>
+        <div class="circle-img"><img src="tupian/01.jpg" alt="风扇续命指南" loading="lazy" decoding="async"></div>
       </div>
       <div class="project-info">
-        <div class="project-tags"><b>02</b><span>Web · Interactive</span></div>
-        <h3 class="project-title">Digital Canvas</h3>
-        <p class="project-desc">An immersive digital exhibition where illustration, motion and interface collapse into one continuous canvas of light.</p>
-        <a class="project-link" href="#" onclick="return false">View case <span>↗</span></a>
+        <div class="project-tags"><b>02</b><span>风扇 · 清灰保养</span></div>
+        <h3 class="project-title">风扇续命指南</h3>
+        <p class="project-desc">噪音大过闹钟的老风扇，拆开清灰、加注润滑油，安静得像换了台新的。夏天续命，就靠这波保养。</p>
+        <a class="project-link" href="#" onclick="return false">查看案例 <span>↗</span></a>
       </div>
     </article>
 
     <article class="project">
       <div class="project-media">
-        <div class="circle-img"><img src="tupian/06.png" alt="Future Forward" loading="lazy" decoding="async"></div>
+        <div class="circle-img"><img src="tupian/06.png" alt="吹风机急救" loading="lazy" decoding="async"></div>
       </div>
       <div class="project-info">
-        <div class="project-tags"><b>03</b><span>Campaign · Film</span></div>
-        <h3 class="project-title">Future Forward</h3>
-        <p class="project-desc">A cinematic launch campaign for what comes next — dark, tactile and quietly confident. Devotion, redesigned for the feed.</p>
-        <a class="project-link" href="#" onclick="return false">View case <span>↗</span></a>
+        <div class="project-tags"><b>03</b><span>小家电 · 配件更换</span></div>
+        <h3 class="project-title">吹风机急救</h3>
+        <p class="project-desc">只吹冷风不吹热风，加热丝当场罢工。换芯重焊之后，冬天洗头终于不用再靠勇气硬扛。</p>
+        <a class="project-link" href="#" onclick="return false">查看案例 <span>↗</span></a>
       </div>
     </article>
 
     <article class="project">
       <div class="project-media">
-        <div class="circle-img"><img src="tupian/13.jpg" alt="Sonic Dreams" loading="lazy" decoding="async"></div>
+        <div class="circle-img"><img src="tupian/13.jpg" alt="音箱重塑计划" loading="lazy" decoding="async"></div>
       </div>
       <div class="project-info">
-        <div class="project-tags"><b>04</b><span>Music · Experience</span></div>
-        <h3 class="project-title">Sonic Dreams</h3>
-        <p class="project-desc">Where sound design meets visual storytelling — a sensory world tuned to a single frequency, blooming in the dark.</p>
-        <a class="project-link" href="#" onclick="return false">View case <span>↗</span></a>
+        <div class="project-tags"><b>04</b><span>音频 · 焊接修复</span></div>
+        <h3 class="project-title">音箱重塑计划</h3>
+        <p class="project-desc">一边响一边哑的蓝牙音箱，虚焊点位逐点排查。修好那天，整个宿舍都在单曲循环。</p>
+        <a class="project-link" href="#" onclick="return false">查看案例 <span>↗</span></a>
       </div>
     </article>
   </div>
@@ -493,33 +493,33 @@ footer{padding:12vh 6vw 5vh;border-top:1px solid var(--faint)}
 
 <!-- ═══════════ 区块4：打字机宣言 ═══════════ -->
 <section id="statement" class="statement">
-  <span class="kicker">( Statement )</span>
+  <span class="kicker">( 社团宣言 )</span>
   <p class="type-text"><span id="typeTarget"></span><span class="caret">|</span></p>
 </section>
 
 <!-- ═══════════ 区块5：服务列表 ═══════════ -->
 <section id="services" class="services">
   <div class="svc-pin">
-    <span class="kicker">What we do</span>
+    <span class="kicker">我们能帮你什么</span>
     <div class="svc-list">
       <div class="service">
         <span class="svc-index">01</span>
-        <h3 class="svc-title">Digital Experiences</h3>
+        <h3 class="svc-title">免费故障诊断</h3>
         <span class="svc-arrow">↗</span>
       </div>
       <div class="service">
         <span class="svc-index">02</span>
-        <h3 class="svc-title">Brand Identity</h3>
+        <h3 class="svc-title">小家电检修</h3>
         <span class="svc-arrow">↗</span>
       </div>
       <div class="service">
         <span class="svc-index">03</span>
-        <h3 class="svc-title">Creative Direction</h3>
+        <h3 class="svc-title">上门帮修服务</h3>
         <span class="svc-arrow">↗</span>
       </div>
       <div class="service">
         <span class="svc-index">04</span>
-        <h3 class="svc-title">Product Design</h3>
+        <h3 class="svc-title">维修技能课堂</h3>
         <span class="svc-arrow">↗</span>
       </div>
     </div>
@@ -527,12 +527,12 @@ footer{padding:12vh 6vw 5vh;border-top:1px solid var(--faint)}
 </section>
 
 <!-- ═══════════ 页脚 ═══════════ -->
-<footer>
-  <div class="foot-word">paradox</div>
+<footer id="contact">
+  <div class="foot-word">家电维修社团</div>
   <div class="foot-meta">
-    <span>© 2025 paradox studio</span>
-    <a href="mailto:hello@paradox.studio">hello@paradox.studio</a>
-    <span>Beijing — Worldwide</span>
+    <span>© 2025 家电维修社团</span>
+    <span>QQ群：123456789</span>
+    <span>服务全校 · 欢迎加入</span>
   </div>
 </footer>
 
@@ -777,7 +777,7 @@ if (!REDUCED) {
   });
 
   /* —— 3.5 打字机：onEnter 触发，约55ms/字符 —— */
-  const TYPE_TEXT = 'We craft experiences that captivate. Brands that endure.';
+  const TYPE_TEXT = '我们修理家电，也修理生活的仪式感。坏了别扔，先来找我们。';
   const typeEl = $('#typeTarget');
   ScrollTrigger.create({
     trigger: '#statement', start: 'top 72%', once: true,
@@ -808,7 +808,7 @@ if (!REDUCED) {
 
 } else {
   /* reduced-motion：静态直出内容 */
-  $('#typeTarget').textContent = 'We craft experiences that captivate. Brands that endure.';
+  $('#typeTarget').textContent = '我们修理家电，也修理生活的仪式感。坏了别扔，先来找我们。';
 }
 
 /* ═══════════ 4. 固定组件（CTA / 进度点 / 导航 / 菜单） ═══════════ */
