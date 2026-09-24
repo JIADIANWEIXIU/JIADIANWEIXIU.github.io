@@ -1001,12 +1001,15 @@ function setBooking(open){
   if (lenis) open ? lenis.stop() : lenis.start();
   /* 锁定主页面滚动（防背景滚动穿透），弹窗 .booking-card 自身仍可滚 */
   document.body.style.overflow = open ? 'hidden' : '';
-  if (open) setTimeout(() => $('#bkName').focus(), 350);
+  /* 仅桌面自动聚焦；手机（扫码进入）聚焦会弹出键盘挡住表单 */
+  if (open && matchMedia('(pointer:fine)').matches) setTimeout(() => $('#bkName').focus(), 350);
   if (!open) document.querySelector('.booking-card').scrollTop = 0;
 }
 $('#navBook').addEventListener('click', e => { e.preventDefault(); setBooking(true); });
 $('#bkClose').addEventListener('click', () => setBooking(false));
 $('#booking').addEventListener('click', e => { if (e.target === $('#booking')) setBooking(false); });
+/* 二维码直达：二维码内容为 网址#booking，扫码打开即自动弹出预约表单 */
+if (location.hash === '#booking') setBooking(true);
 
 /* 表单提交：AJAX 方式不跳转页面，成功/失败均在弹窗内提示 */
 $('#bkForm').addEventListener('submit', async e => {
