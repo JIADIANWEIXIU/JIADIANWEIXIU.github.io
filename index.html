@@ -353,48 +353,72 @@ footer{padding:12vh 6vw 5vh;border-top:1px solid var(--faint)}
 body.booking-open .booking{opacity:1;visibility:visible}
 .booking-card{
   position:relative;
-  width:min(480px,100%);max-height:88vh;overflow-y:auto;
+  width:min(720px,100%);max-height:90vh;overflow-y:auto;
   background:#13131a;border:1px solid rgba(168,85,247,.28);
-  border-radius:18px;padding:34px 30px 30px;
+  border-radius:18px;padding:40px 44px 36px;
   transform:translateY(26px) scale(.97);
   transition:transform .45s var(--ease);
 }
 body.booking-open .booking-card{transform:none}
 .booking-close{
-  position:absolute;top:12px;right:14px;
-  background:none;border:0;color:var(--dim);font-size:24px;
+  position:absolute;top:14px;right:16px;
+  background:none;border:0;color:var(--dim);font-size:26px;
   cursor:pointer;line-height:1;padding:6px;transition:color .3s;
 }
 .booking-close:hover{color:#fff}
-.bk-title{font-family:var(--serif);font-weight:600;font-size:1.75rem;margin-bottom:6px}
-.bk-sub{color:var(--dim);font-size:13px;margin-bottom:24px;line-height:1.65}
-.field{margin-bottom:16px}
+.bk-title{font-family:var(--serif);font-weight:600;font-size:2.15rem;margin-bottom:8px}
+.bk-sub{color:var(--dim);font-size:13.5px;margin-bottom:28px;line-height:1.65}
+.field{margin-bottom:18px}
 .field label{
   display:block;font-size:11px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--dim);margin-bottom:8px;
 }
 .field input,.field select,.field textarea{
   width:100%;background:#0d0d12;border:1px solid rgba(255,255,255,.12);
-  border-radius:10px;padding:12px 14px;color:#fff;font-size:14px;
+  border-radius:10px;padding:14px 16px;color:#fff;font-size:15px;
   font-family:var(--sans);outline:none;
   transition:border-color .3s;
 }
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--purple)}
 .field input::placeholder,.field textarea::placeholder{color:#55555e}
-.field textarea{resize:vertical;min-height:88px}
+.field textarea{resize:vertical;min-height:104px}
 .field select{color-scheme:dark;cursor:pointer}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .bk-submit{
-  width:100%;margin-top:6px;padding:14px;border:0;border-radius:9999px;
-  background:#fff;color:#0a0a0a;font-size:13px;font-weight:600;
+  width:100%;margin-top:8px;padding:16px;border:0;border-radius:9999px;
+  background:#fff;color:#0a0a0a;font-size:14px;font-weight:600;
   letter-spacing:.22em;text-transform:uppercase;cursor:pointer;
   transition:background .3s,transform .3s;
 }
 .bk-submit:hover{background:var(--pink);transform:translateY(-1px)}
 .bk-submit:disabled{opacity:.55;cursor:wait;transform:none}
-.bk-msg{margin-top:14px;font-size:13px;line-height:1.6;display:none;border-radius:8px;padding:10px 14px}
+.bk-msg{margin-top:16px;font-size:13.5px;line-height:1.6;display:none;border-radius:8px;padding:12px 16px}
 .bk-msg.ok{display:block;background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
 .bk-msg.err{display:block;background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.25)}
+/* 弹窗内滚动条：细窄半透明紫，悬停变亮；Firefox 用细滚动条 */
+.booking-card::-webkit-scrollbar{width:6px}
+.booking-card::-webkit-scrollbar-track{background:transparent}
+.booking-card::-webkit-scrollbar-thumb{
+  background:rgba(168,85,247,.35);border-radius:9999px;
+}
+.booking-card::-webkit-scrollbar-thumb:hover{background:rgba(232,164,224,.65)}
+.booking-card{scrollbar-width:thin;scrollbar-color:rgba(168,85,247,.35) transparent}
+/* 移动端适配：窄屏改单列、全屏化弹窗、放大触控目标 */
+@media(max-width:640px){
+  .booking{padding:0;align-items:stretch}
+  .booking-card{
+    width:100%;max-height:100vh;height:100vh;height:100dvh;
+    border-radius:0;border:0;padding:56px 22px 28px;
+  }
+  .booking-close{top:10px;right:10px;font-size:28px;padding:10px}
+  .bk-title{font-size:1.7rem}
+  .bk-sub{margin-bottom:22px}
+  .field-row{grid-template-columns:1fr;gap:0}
+  .field{margin-bottom:14px}
+  .field input,.field select,.field textarea{padding:13px 14px;font-size:16px} /* 16px 防 iOS 聚焦自动放大 */
+  .field textarea{min-height:96px}
+  .bk-submit{padding:17px}
+}
 @media(max-width:560px){.field-row{grid-template-columns:1fr}}
 
 /* ═══════════ 12. 响应式 ═══════════ */
@@ -827,6 +851,13 @@ if (!REDUCED && window.Lenis) {
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
 }
+/* 弹窗/菜单打开时，Lenis 虽已 stop 但仍会拦截 wheel 事件——
+   在捕获阶段放行弹窗内滚动，保证表单区滚动丝滑 */
+document.addEventListener('wheel', e => {
+  if (!document.body.classList.contains('booking-open')) return;
+  const card = e.target.closest && e.target.closest('.booking-card');
+  if (card) e.stopImmediatePropagation();
+}, { capture: true, passive: true });
 function scrollToTarget(target){
   if (lenis) { lenis.scrollTo(target, { duration: 1.5, easing: t => 1 - Math.pow(1 - t, 4) }); return; }
   if (target === 0) { window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' }); return; }
@@ -966,7 +997,10 @@ const CONTACT_EMAIL = 'htsllpyyds715@163.com';
 function setBooking(open){
   document.body.classList.toggle('booking-open', open);
   if (lenis) open ? lenis.stop() : lenis.start();
+  /* 锁定主页面滚动（防背景滚动穿透），弹窗 .booking-card 自身仍可滚 */
+  document.body.style.overflow = open ? 'hidden' : '';
   if (open) setTimeout(() => $('#bkName').focus(), 350);
+  if (!open) document.querySelector('.booking-card').scrollTop = 0;
 }
 $('#navBook').addEventListener('click', e => { e.preventDefault(); setBooking(true); });
 $('#bkClose').addEventListener('click', () => setBooking(false));
@@ -992,13 +1026,19 @@ $('#bkForm').addEventListener('submit', async e => {
         '期望时间': $('#bkTime').value.trim() || '未填'
       })
     });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    /* FormSubmit 对"未激活来源"也可能返回 200，必须再校验响应体的 success 字段 */
+    const data = await res.json().catch(() => ({}));
+    const ok = res.ok && data.success !== 'false' && data.success !== false;
+    if (!ok) throw new Error(data.message || ('HTTP ' + res.status));
     msg.className = 'bk-msg ok';
     msg.textContent = '预约已发送！我们会尽快联系你，也可以直接加 QQ群：123456789。';
     $('#bkForm').reset();
   } catch (err) {
     msg.className = 'bk-msg err';
-    msg.textContent = '发送失败（网络问题或邮箱未激活）。可稍后重试，或直接加 QQ群：123456789。';
+    /* 命中"来源未激活"时给出针对性提示（FormSubmit 激活与提交的域名绑定） */
+    msg.textContent = (err.message || '').indexOf('ctivate') > -1
+      ? '该访问地址还未激活：请去邮箱（含垃圾箱）找新的激活邮件点一次 Activate，或改用已激活的地址打开本页。'
+      : '发送失败（网络问题或邮箱未激活）。可稍后重试，或直接加 QQ群：123456789。';
   } finally {
     btn.disabled = false; btn.textContent = '提交预约';
   }
