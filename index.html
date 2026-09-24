@@ -512,6 +512,15 @@ body.booking-open .booking-card{transform:none}
     </form>
   </div>
 </div>
+<script>
+  /* 扫码直达（独立 ES5 小脚本，主脚本加载失败时也能弹出表单）
+     入口① ?booking 查询参数 —— 微信等内置浏览器会丢弃 # 锚点，查询参数不受影响
+     入口② #booking 锚点     —— 普通浏览器兼容保留 */
+  if (location.hash === '#booking' || location.search.indexOf('booking') > -1) {
+    document.body.classList.add('booking-open');
+    document.body.style.overflow = 'hidden';
+  }
+</script>
 
 <!-- ═══════════ 区块1：Hero 首屏 ═══════════ -->
 <section id="hero">
@@ -1008,8 +1017,8 @@ function setBooking(open){
 $('#navBook').addEventListener('click', e => { e.preventDefault(); setBooking(true); });
 $('#bkClose').addEventListener('click', () => setBooking(false));
 $('#booking').addEventListener('click', e => { if (e.target === $('#booking')) setBooking(false); });
-/* 二维码直达：二维码内容为 网址#booking，扫码打开即自动弹出预约表单 */
-if (location.hash === '#booking') setBooking(true);
+/* 扫码直达：?booking（微信不认 # 锚点时的主入口）或 #booking，均自动弹出预约表单 */
+if (location.hash === '#booking' || location.search.indexOf('booking') > -1) setBooking(true);
 
 /* 表单提交：AJAX 方式不跳转页面，成功/失败均在弹窗内提示 */
 $('#bkForm').addEventListener('submit', async e => {
