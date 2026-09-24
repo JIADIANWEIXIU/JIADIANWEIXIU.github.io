@@ -403,6 +403,8 @@ body.booking-open .booking-card{transform:none}
 }
 .booking-card::-webkit-scrollbar-thumb:hover{background:rgba(232,164,224,.65)}
 .booking-card{scrollbar-width:thin;scrollbar-color:rgba(168,85,247,.35) transparent}
+/* 移动端触摸滚动：阻断滚动链（防止滚到头带动背景页），开启惯性滚动 */
+.booking-card{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 /* 移动端适配：窄屏改单列、全屏化弹窗、放大触控目标 */
 @media(max-width:640px){
   .booking{padding:0;align-items:stretch}
@@ -470,7 +472,7 @@ body.booking-open .booking-card{transform:none}
 
 <!-- ═══════════ 预约维修弹窗（FormSubmit 发送到邮箱） ═══════════ -->
 <div class="booking" id="booking">
-  <div class="booking-card">
+  <div class="booking-card" data-lenis-prevent>
     <button class="booking-close" id="bkClose" aria-label="关闭">×</button>
     <h3 class="bk-title">预约维修</h3>
     <p class="bk-sub">填好后我们会尽快联系你。轻小家电优先，诊断与检修全部免费。</p>
