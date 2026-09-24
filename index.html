@@ -206,22 +206,11 @@ body.menu-open .overlay a:nth-child(4){transition-delay:.18s}
   box-shadow:0 0 140px -30px rgba(168,85,247,.4);
   will-change:transform;
 }
-/* 双色调：底层紫粉渐变 × 灰度图(multiply) × 紫色提亮层(lighten) */
-.circle-img::before{
-  content:'';position:absolute;inset:0;z-index:0;
-  background:linear-gradient(155deg,#a855f7 0%,#ec4899 62%,#f3cff3 100%);
-}
+/* 原图直出，仅保留圆形裁剪 */
 .circle-img img{
   position:relative;z-index:1;width:100%;height:100%;
   object-fit:cover;display:block;
-  mix-blend-mode:multiply;
-  filter:grayscale(1) contrast(1.12) brightness(1.04);
   transition:transform 1s var(--ease);
-}
-.circle-img::after{
-  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:linear-gradient(155deg,#1c0733 0%,#581c87 58%,#c026d3 100%);
-  mix-blend-mode:lighten;opacity:.85;
 }
 .project:hover .circle-img img{transform:scale(1.06)}
 .project-tags{
@@ -270,7 +259,7 @@ body.reduced .caret{animation:none}
 /* ═══════════ 8. 服务列表（三态状态机） ═══════════ */
 .services{padding:16vh 6vw 20vh}
 .svc-pin{
-  min-height:100vh;display:flex;flex-direction:column;
+  display:flex;flex-direction:column;
   justify-content:center;gap:8vh;
 }
 .svc-list{display:flex;flex-direction:column}
@@ -278,40 +267,30 @@ body.reduced .caret{animation:none}
   display:flex;align-items:center;gap:clamp(18px,3.5vw,44px);
   padding:clamp(14px,2.4vw,20px) clamp(10px,2vw,26px);
   border-radius:16px;
-  max-height:160px;overflow:hidden;
-  color:var(--ink);cursor:default;
+  overflow:hidden;
+  color:var(--ink);cursor:pointer;user-select:none;
   transition:
     background-color .35s var(--ease),
     color .35s var(--ease),
     padding .5s var(--ease),
-    max-height .5s var(--ease),
     border-radius .5s var(--ease);
 }
 .service + .service{margin-top:6px}
-/* 激活态：白底黑字 + 箭头 */
+/* 激活态（悬停/点击）：白底黑字 + 箭头 */
 .service.is-active{
   background:#fff;color:#0a0a0a;
   padding:clamp(22px,3vw,30px) clamp(18px,3vw,34px);
 }
-/* 归档态：紧凑纯文本行 */
-.service.is-archived{
-  background:transparent;color:rgba(255,255,255,.8);
-  padding:6px 2px;max-height:72px;border-radius:0;
-  border-bottom:1px solid rgba(255,255,255,.12);
-}
-.service:not(.is-active):not(.is-archived):hover{background:rgba(255,255,255,.05)}
+.service:not(.is-active):hover{background:rgba(255,255,255,.05)}
 .svc-index{
   font-size:12px;letter-spacing:.18em;color:var(--dim);
   min-width:34px;transition:color .35s;
 }
 .service.is-active .svc-index{color:#666}
-.service.is-archived .svc-index{font-size:10px;color:rgba(255,255,255,.35)}
 .svc-title{
   font-family:var(--serif);font-weight:500;
   font-size:clamp(1.8rem,4.4vw,3.2rem);line-height:1.1;
-  transition:font-size .5s var(--ease);
 }
-.service.is-archived .svc-title{font-size:clamp(1rem,2vw,1.4rem)}
 .svc-arrow{
   margin-left:auto;font-size:clamp(1.2rem,2vw,1.8rem);
   opacity:0;transform:translateX(-14px) rotate(-12deg);
@@ -361,7 +340,64 @@ footer{padding:12vh 6vw 5vh;border-top:1px solid var(--faint)}
   transform:translate(-50%,0);will-change:transform;
 }
 
-/* ═══════════ 11. 响应式 ═══════════ */
+/* ═══════════ 11. 预约维修弹窗（FormSubmit → 邮箱） ═══════════ */
+.booking{
+  position:fixed;inset:0;z-index:120;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  background:rgba(8,8,12,.72);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  opacity:0;visibility:hidden;
+  transition:opacity .4s var(--ease),visibility .4s;
+}
+body.booking-open .booking{opacity:1;visibility:visible}
+.booking-card{
+  position:relative;
+  width:min(480px,100%);max-height:88vh;overflow-y:auto;
+  background:#13131a;border:1px solid rgba(168,85,247,.28);
+  border-radius:18px;padding:34px 30px 30px;
+  transform:translateY(26px) scale(.97);
+  transition:transform .45s var(--ease);
+}
+body.booking-open .booking-card{transform:none}
+.booking-close{
+  position:absolute;top:12px;right:14px;
+  background:none;border:0;color:var(--dim);font-size:24px;
+  cursor:pointer;line-height:1;padding:6px;transition:color .3s;
+}
+.booking-close:hover{color:#fff}
+.bk-title{font-family:var(--serif);font-weight:600;font-size:1.75rem;margin-bottom:6px}
+.bk-sub{color:var(--dim);font-size:13px;margin-bottom:24px;line-height:1.65}
+.field{margin-bottom:16px}
+.field label{
+  display:block;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:8px;
+}
+.field input,.field select,.field textarea{
+  width:100%;background:#0d0d12;border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;padding:12px 14px;color:#fff;font-size:14px;
+  font-family:var(--sans);outline:none;
+  transition:border-color .3s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--purple)}
+.field input::placeholder,.field textarea::placeholder{color:#55555e}
+.field textarea{resize:vertical;min-height:88px}
+.field select{color-scheme:dark;cursor:pointer}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.bk-submit{
+  width:100%;margin-top:6px;padding:14px;border:0;border-radius:9999px;
+  background:#fff;color:#0a0a0a;font-size:13px;font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;cursor:pointer;
+  transition:background .3s,transform .3s;
+}
+.bk-submit:hover{background:var(--pink);transform:translateY(-1px)}
+.bk-submit:disabled{opacity:.55;cursor:wait;transform:none}
+.bk-msg{margin-top:14px;font-size:13px;line-height:1.6;display:none;border-radius:8px;padding:10px 14px}
+.bk-msg.ok{display:block;background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
+.bk-msg.err{display:block;background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.25)}
+@media(max-width:560px){.field-row{grid-template-columns:1fr}}
+
+/* ═══════════ 12. 响应式 ═══════════ */
 @media (max-width:860px){
   .project{grid-template-columns:1fr;gap:7vh;min-height:0;padding:6vh 0}
   .project:nth-child(even) .project-media{order:0}
@@ -390,7 +426,7 @@ footer{padding:12vh 6vw 5vh;border-top:1px solid var(--faint)}
 <header class="nav" id="nav">
   <a class="logo" href="#hero" data-scroll>家电维修<sup>社团</sup></a>
   <nav class="nav-right">
-    <a class="nav-link" href="#work" data-scroll>案例</a>
+    <a class="nav-link" href="#booking" id="navBook">预约维修</a>
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span></button>
   </nav>
 </header>
@@ -407,6 +443,49 @@ footer{padding:12vh 6vw 5vh;border-top:1px solid var(--faint)}
 <!-- ═══════════ 固定 CTA + 进度点 ═══════════ -->
 <button class="cta" id="cta" aria-label="Back to top">↗</button>
 <div class="rail" id="rail"><div class="rail-dot"></div></div>
+
+<!-- ═══════════ 预约维修弹窗（FormSubmit 发送到邮箱） ═══════════ -->
+<div class="booking" id="booking">
+  <div class="booking-card">
+    <button class="booking-close" id="bkClose" aria-label="关闭">×</button>
+    <h3 class="bk-title">预约维修</h3>
+    <p class="bk-sub">填好后我们会尽快联系你。轻小家电优先，诊断与检修全部免费。</p>
+    <form id="bkForm">
+      <div class="field-row">
+        <div class="field">
+          <label for="bkName">称呼</label>
+          <input id="bkName" name="name" type="text" placeholder="怎么称呼你" required>
+        </div>
+        <div class="field">
+          <label for="bkContact">QQ / 手机号</label>
+          <input id="bkContact" name="contact" type="text" placeholder="方便联系到你的号码" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="bkType">家电类型</label>
+        <select id="bkType" name="type">
+          <option>台灯 / 照明</option>
+          <option>风扇</option>
+          <option>吹风机</option>
+          <option>音箱 / 耳机</option>
+          <option>电水壶 / 小厨电</option>
+          <option>充电器 / 数据线</option>
+          <option>其他</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="bkDesc">故障描述</label>
+        <textarea id="bkDesc" name="desc" placeholder="例：台灯按开关没反应，换了灯泡也不亮" required></textarea>
+      </div>
+      <div class="field">
+        <label for="bkTime">期望时间（选填）</label>
+        <input id="bkTime" name="time" type="text" placeholder="例：周三下午 / 周末白天">
+      </div>
+      <button class="bk-submit" id="bkSubmit" type="submit">提交预约</button>
+      <p class="bk-msg" id="bkMsg"></p>
+    </form>
+  </div>
+</div>
 
 <!-- ═══════════ 区块1：Hero 首屏 ═══════════ -->
 <section id="hero">
@@ -548,6 +627,36 @@ const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 if (REDUCED) document.body.classList.add('reduced');
+
+/* ═══════════ 服务列表交互：鼠标悬停激活；触屏/点击可锁定一项（互斥） ═══════════ */
+function initServiceInteraction(){
+  const rows = $$('.service');
+  if (!rows.length) return;
+  let locked = null; /* 被点击锁定的项 */
+  rows.forEach(row => {
+    /* 悬停：直接置为激活态（若有锁定项且悬停的是别的行，临时覆盖显示） */
+    row.addEventListener('mouseenter', () => {
+      rows.forEach(r => r.classList.remove('is-active'));
+      row.classList.add('is-active');
+    });
+    row.addEventListener('mouseleave', () => {
+      row.classList.remove('is-active');
+      /* 恢复被点击锁定的项 */
+      if (locked) locked.classList.add('is-active');
+    });
+    /* 点击：锁定/解锁激活态（移动端触屏主要靠点击） */
+    row.addEventListener('click', () => {
+      if (locked === row) {            /* 再点一次取消锁定 */
+        locked = null;
+        row.classList.remove('is-active');
+      } else {
+        locked = row;
+        rows.forEach(r => r.classList.remove('is-active'));
+        row.classList.add('is-active');
+      }
+    });
+  });
+}
 
 /* ═══════════ 1. WebGL 流体波浪（原生 Shader，不可用时降级 CSS 渐变） ═══════════ */
 const waveState = { scroll: 0, time: 0 };
@@ -790,25 +899,13 @@ if (!REDUCED) {
     }
   });
 
-  /* —— 3.6 服务列表状态机：pin 区间内 激活焦点逐项下移 → 整体归档 —— */
-  const rows = $$('.service');
-  ScrollTrigger.create({
-    trigger: '.svc-pin', start: 'top top', end: '+=1700', pin: true,
-    onUpdate(self){
-      const p = self.progress;
-      const archived = p > 0.62;
-      const focus = Math.min(rows.length - 1, Math.floor(Math.max(p - 0.02, 0) / 0.14));
-      rows.forEach((row, i) => {
-        row.classList.toggle('is-active', !archived && i === focus && p > 0.02);
-        row.classList.toggle('is-archived', archived);
-      });
-    },
-    onLeaveBack(){ rows.forEach(r => r.classList.remove('is-active', 'is-archived')); }
-  });
+  /* —— 3.6 服务列表：悬停/点击切换激活态（白底黑字+箭头），不再随滚动变化 —— */
+  initServiceInteraction();
 
 } else {
   /* reduced-motion：静态直出内容 */
   $('#typeTarget').textContent = '我们修理家电，也修理生活的仪式感。坏了别扔，先来找我们。';
+  initServiceInteraction();
 }
 
 /* ═══════════ 4. 固定组件（CTA / 进度点 / 导航 / 菜单） ═══════════ */
@@ -847,7 +944,9 @@ function setMenu(open){
   if (lenis) open ? lenis.stop() : lenis.start();
 }
 $('#burger').addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
-document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { setMenu(false); setBooking(false); }
+});
 
 /* 锚点平滑滚动 */
 $$('[data-scroll]').forEach(a => {
@@ -858,6 +957,52 @@ $$('[data-scroll]').forEach(a => {
   });
 });
 cta.addEventListener('click', () => scrollToTarget(0));
+
+/* ═══════════ 5. 预约维修弹窗：FormSubmit AJAX → 邮箱 ═══════════ */
+/* ★★ 部署前必改：换成你的真实邮箱。首次提交后 FormSubmit 会发一封激活邮件到该邮箱，
+   点一次里面的 Activate 按钮即永久生效，之后的预约都会直接送达该邮箱 ★★ */
+const CONTACT_EMAIL = 'htsllpyyds715@163.com';
+
+function setBooking(open){
+  document.body.classList.toggle('booking-open', open);
+  if (lenis) open ? lenis.stop() : lenis.start();
+  if (open) setTimeout(() => $('#bkName').focus(), 350);
+}
+$('#navBook').addEventListener('click', e => { e.preventDefault(); setBooking(true); });
+$('#bkClose').addEventListener('click', () => setBooking(false));
+$('#booking').addEventListener('click', e => { if (e.target === $('#booking')) setBooking(false); });
+
+/* 表单提交：AJAX 方式不跳转页面，成功/失败均在弹窗内提示 */
+$('#bkForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = $('#bkSubmit'), msg = $('#bkMsg');
+  btn.disabled = true; btn.textContent = '提交中…';
+  msg.className = 'bk-msg'; msg.textContent = '';
+  try {
+    const res = await fetch('https://formsubmit.co/ajax/' + CONTACT_EMAIL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: '【家电维修预约】' + $('#bkName').value.trim(),  // 邮件主题
+        _template: 'table',                                       // 邮件内容表格化
+        '称呼':     $('#bkName').value.trim(),
+        '联系方式': $('#bkContact').value.trim(),
+        '家电类型': $('#bkType').value,
+        '故障描述': $('#bkDesc').value.trim(),
+        '期望时间': $('#bkTime').value.trim() || '未填'
+      })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    msg.className = 'bk-msg ok';
+    msg.textContent = '预约已发送！我们会尽快联系你，也可以直接加 QQ群：123456789。';
+    $('#bkForm').reset();
+  } catch (err) {
+    msg.className = 'bk-msg err';
+    msg.textContent = '发送失败（网络问题或邮箱未激活）。可稍后重试，或直接加 QQ群：123456789。';
+  } finally {
+    btn.disabled = false; btn.textContent = '提交预约';
+  }
+});
 
 /* 图片加载完成后刷新触发器位置 */
 window.addEventListener('load', () => ScrollTrigger.refresh());
